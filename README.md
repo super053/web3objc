@@ -5,7 +5,7 @@ web3js objective c version(for ios)
 struct	
 			
 		          
-	web3  	- sharedInstance()		
+	web3	- sharedInstance()		
       		- setEndPoint(endpoint,chainid)
       		- *eth		- getGasPrice()	
 		          	- getBlockNumber()	
