@@ -1,0 +1,10 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/RLP-ObjC/include" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/RLP-ObjC" "${PODS_ROOT}/Headers/Public/TrezorCrypto" "${PODS_ROOT}/Headers/Public/secp256k1_ios"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/RLP-ObjC" "${PODS_CONFIGURATION_BUILD_DIR}/TrezorCrypto" "${PODS_CONFIGURATION_BUILD_DIR}/secp256k1_ios"
+OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_ROOT}/Headers/Public/secp256k1_ios/secp256k1_ios.modulemap" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/RLP-ObjC" -isystem "${PODS_ROOT}/Headers/Public/TrezorCrypto" -isystem "${PODS_ROOT}/Headers/Public/secp256k1_ios"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"RLP-ObjC" -l"TrezorCrypto" -l"c" -l"secp256k1_ios" -framework "Foundation"
+OTHER_SWIFT_FLAGS = $(inherited) -Xcc -fmodule-map-file="${PODS_ROOT}/Headers/Public/secp256k1_ios/secp256k1_ios.modulemap"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods

@@ -1,0 +1,1 @@
+../../../TrezorCrypto/trezor-crypto/blake2b.h

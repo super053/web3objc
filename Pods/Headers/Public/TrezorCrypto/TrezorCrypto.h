@@ -1,0 +1,1 @@
+../../../TrezorCrypto/TrezorCrypto.h

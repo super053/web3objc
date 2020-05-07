@@ -1,0 +1,1 @@
+../../../TrezorCrypto/trezor-crypto/bip32.h

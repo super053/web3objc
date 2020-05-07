@@ -1,0 +1,1 @@
+../../../TrezorCrypto/trezor-crypto/cash_addr.h

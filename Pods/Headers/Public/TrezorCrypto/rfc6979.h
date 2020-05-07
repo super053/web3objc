@@ -1,0 +1,1 @@
+../../../TrezorCrypto/trezor-crypto/rfc6979.h
