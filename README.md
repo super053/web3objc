@@ -8,7 +8,7 @@ Testing is required for use with osx.
 It's basically made with the structure of web3js.  
  기본적으로 web3js의 구조를 따라 만들었습니다.  
 
-struct	
+	struct	
 			
 		          
 	web3	- sharedInstance()		
