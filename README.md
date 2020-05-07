@@ -16,7 +16,7 @@ struct
 				- call(tx)	
 				- estimateGas(tx)	
 				- getChainId()
-				- contract	- initWithAddress(contract address)
+				- *contract	- initWithAddress(contract address)
 			                    	- call(function str, argument...)
 			                    	- encodeABI(function str, argument...)
 			
