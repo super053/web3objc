@@ -1,12 +1,19 @@
 # web3objc
 web3js objective c version(for ios)
+web3js의 objective c 버전입니다(아이폰)
 
+Testing is required for use with osx.
+osx에 사용 할려면 테스트가 필요합니다.
+
+It's basically made with the structure of web3js.
+기본적으로 web3js의 구조를 따라 만들었습니다.
 
 struct	
 			
 		          
 	web3	- sharedInstance()		
 		- setEndPoint(endpoint,chainid)
+		
 		- *eth		- getGasPrice()	
 				- getBlockNumber()	
 				- getBalance(address)	
@@ -16,6 +23,7 @@ struct
 				- call(tx)	
 				- estimateGas(tx)	
 				- getChainId()
+				
 				- *contract	- initWithAddress(contract address)
 			                    	- call(function str, argument...)
 			                    	- encodeABI(function str, argument...)
@@ -29,6 +37,7 @@ struct
 			                    	- recover(message, signature)
 			                    	- encrypt(privateKey, password)
 			                    	- decrypt(jsonDic, password) 
+			
 			
 	    	- *utils	- randomHex(size)	
 		           	- sha3(string)	
@@ -45,7 +54,11 @@ struct
 Pods/TrezorCrypto/aes.h 41: uncomment
 
 coinvest ios & blockchain developer P.K. (Park Sung Sik)
+super053@gmail.com
+coinios1@coinvest.kr
 
 
 
 donation(ethereum) : 0xbef705eE6a72Cd35C2ED6b657dD4aC2c0AAB82b6
+
+[![HitCount](http://hits.dwyl.com/super053/web3objc.svg)](http://hits.dwyl.com/super053/web3objc)
