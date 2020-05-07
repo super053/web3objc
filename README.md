@@ -53,9 +53,9 @@ It's basically made with the structure of web3js.
     
 Pods/TrezorCrypto/aes.h 41: uncomment
 
-coinvest ios & blockchain developer P.K. (Park Sung Sik)
-super053@gmail.com
-coinios1@coinvest.kr
+coinvest ios & blockchain developer P.K. (Park Sung Sik)  
+super053@gmail.com  
+coinios1@coinvest.kr  
 
 
 
