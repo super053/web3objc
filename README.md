@@ -1,14 +1,7 @@
-<meta name="google-site-verification" content="AGKNM13TfAulKPcmsuDa1LCV6avT3yCmniGgdQJ_7W4" />
-
 # web3objc
 web3js objective c version(for ios)  
- web3js의 objective c 버전입니다(아이폰)  
 
-Testing is required for use with osx.  
- osx에 사용 할려면 테스트가 필요합니다.  
 
-It's basically made with the structure of web3js.  
- 기본적으로 web3js의 구조를 따라 만들었습니다.  
 
 	struct	
 			
