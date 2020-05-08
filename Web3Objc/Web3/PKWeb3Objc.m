@@ -37,6 +37,6 @@
         [userDefault setObject:_chainId forKey:@"chainid"];
         retVal = [userDefault synchronize];
     }
-    return retVal
+    return retVal;
 }
 @end

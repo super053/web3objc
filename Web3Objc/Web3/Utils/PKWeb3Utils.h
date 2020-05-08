@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString *)hexToNumber:(NSString *)_hex;
 -(NSString *)utf8ToHex:(NSString *)_String;
 -(NSString *)hexToUtf8:(NSString *)_hex;
--(NSString *)toWei:(NSString *)_number WithUnit:(NSString *)_unit;
--(NSString *)fromWei:(NSString *)_number WithUnit:(NSString *)_unit;
+-(NSString *)toWei:(NSString *)_number WithUnit:(nullable NSString *)_unit;
+-(NSString *)fromWei:(NSString *)_number WithUnit:(nullable NSString *)_unit;
 @end
 
 NS_ASSUME_NONNULL_END
