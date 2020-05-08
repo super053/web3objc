@@ -191,14 +191,14 @@
     [info setValue:@"" forKey:@"decimal"];
     NSDictionary *nameDic = [self ethCallFrom:@"" To:_contractAddress Gas:@"" GasPrice:@"" Value:@"" Data:nameSelector];
     if ([nameDic valueForKey:@"result"]) {
-        NSString *nameStr = [CVETHABIArgument stringFromArgument:[nameDic valueForKey:@"result"]];
+        NSString *nameStr = [CVETHABIArgument toString:[nameDic valueForKey:@"result"]];
         [info setValue:nameStr forKey:@"name"];
     }
     
     
     NSDictionary *symbolDic = [self ethCallFrom:@"" To:_contractAddress Gas:@"" GasPrice:@"" Value:@"" Data:symbolSelector];
     if ([symbolDic valueForKey:@"result"]) {
-        NSString *sumbolStr = [CVETHABIArgument stringFromArgument:[symbolDic valueForKey:@"result"]];
+        NSString *sumbolStr = [CVETHABIArgument toString:[symbolDic valueForKey:@"result"]];
         [info setValue:sumbolStr forKey:@"symbol"];
     }
     

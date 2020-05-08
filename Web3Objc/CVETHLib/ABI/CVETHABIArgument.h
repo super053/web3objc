@@ -35,6 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  decode from bytes
  */
++(NSString *)toUint:(NSString *)_resultArg;
++(NSString *)toInt:(NSString *)_resultArg;
++(NSString *)toAddress:(NSString *)_resultArg;
++(NSString *)toBool:(NSString *)_resultArg;
++(NSString *)toBytes:(NSString *)_resultArg;
 +(NSString *)toString:(NSString *)_resultArg;
 @end
 
