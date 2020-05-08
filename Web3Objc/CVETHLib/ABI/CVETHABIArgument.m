@@ -11,7 +11,9 @@
 #import "NSData+CVETH.h"
 
 @implementation CVETHABIArgument
-
+/**
+encode to bytes
+*/
 +(NSString *)functionsSelectorHash:(NSString *)_function
 {
     return [[_function keccak256HashString] substringToIndex:8];
@@ -28,7 +30,7 @@
     argument = [argument substringWithRange:NSMakeRange(0, 64)];
     return argument;
 }
-+(NSString *)argumentFromString:(NSString *)_stringArg
++(NSString *)fromString:(NSString *)_stringArg
 {
     NSData *argData = [_stringArg dataUsingEncoding:NSUTF8StringEncoding];
     NSString *retStr = [self argumentWithPadding:@"20"]; //32 hex
@@ -51,7 +53,11 @@
     
     return retStr;
 }
-+(NSString *)stringFromArgument:(NSString *)_resultArg
+
+/**
+ decode from bytes
+ */
++(NSString *)toString:(NSString *)_resultArg
 {
     NSData *resultData = [_resultArg parseHexData];
     if (resultData.length < 64) {
