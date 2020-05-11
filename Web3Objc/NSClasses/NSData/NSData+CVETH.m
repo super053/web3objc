@@ -27,6 +27,9 @@ static const UniChar base58chars[] = {
 
 //    NSLog(@"%@",str);
 //    return [[[[NSString stringWithFormat:@"%@", self] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@"<" withString:@""] stringByReplacingOccurrencesOfString:@">" withString:@""];
+    if (str.length == 0) {
+        return @"";
+    }
     return str;
 }
 -(NSData *)keccak256

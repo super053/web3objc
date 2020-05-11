@@ -27,7 +27,7 @@
 {
     return [self getRandomKeyByLength:_bytes * 2];
 }
-+(NSString *)getWalletAddress:(NSString *)_privKey;
++(NSString *)getWalletAddressFromPrivateKey:(NSString *)_privKey;
 {
     if (_privKey.length != 64) {
         NSLog(@"Invalid Key");
@@ -54,6 +54,13 @@
     
     return [self getCheckSumAddress:[address dataDirectString]];
     //주소 체크섬 끝
+}
++(NSString *)getWalletAddressFromPublicKey:(NSData *)_pubKey
+{
+    NSData *pubKeyData_remove_prefix = [_pubKey subdataWithRange:NSMakeRange(1, 64)];
+    NSData *hash = [pubKeyData_remove_prefix keccak256];
+    NSData *address = [hash subdataWithRange:NSMakeRange(hash.length - 20, 20)];
+    return [self getCheckSumAddress:[address dataDirectString]];
 }
 +(NSString *)getCheckSumAddress:(NSString *)_address
 {

@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CVETHWallet : NSObject
 +(NSString *)getRandomKeyByLength:(NSInteger)_length;
 +(NSString *)getRandomKeyByBytes:(NSInteger)_bytes;
-+(NSString *)getWalletAddress:(NSString *)_privKey;
++(NSString *)getWalletAddressFromPrivateKey:(NSString *)_privKey;
++(NSString *)getWalletAddressFromPublicKey:(NSData *)_pubKey;
 +(NSString *)getCheckSumAddress:(NSString *)_address;
 +(BOOL)checkAddressCheckSum:(NSString *)_address;
 

@@ -20,7 +20,7 @@
 {
     /*json-version, address, id*/
     NSInteger version = 3;
-    NSString *address = [[[CVETHWallet getWalletAddress:_privKey] removePrefix0x] lowercaseString];
+    NSString *address = [[[CVETHWallet getWalletAddressFromPrivateKey:_privKey] removePrefix0x] lowercaseString];
     NSString *_id = [[[NSUUID UUID] UUIDString] lowercaseString];
     
     /*json-crypto*/
@@ -177,7 +177,7 @@
     privKey = [[NSData dataWithBytes:privKeyData length:32] dataDirectString];
     
     /*check address*/
-    if (![[[[CVETHWallet getWalletAddress:privKey] removePrefix0x] lowercaseString] isEqualToString:[[address removePrefix0x] lowercaseString]]) {
+    if (![[[[CVETHWallet getWalletAddressFromPrivateKey:privKey] removePrefix0x] lowercaseString] isEqualToString:[[address removePrefix0x] lowercaseString]]) {
         return nil;
     }
     

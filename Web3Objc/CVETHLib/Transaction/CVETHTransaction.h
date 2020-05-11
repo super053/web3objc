@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain) NSString *s;
 
 -(NSString *)getSignTX:(NSString *)_privKey;
+-(void)setTransactionChainID:(NSString *)_chainID;
 
 
 

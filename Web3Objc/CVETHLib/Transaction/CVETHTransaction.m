@@ -43,8 +43,13 @@
 {
     signature = [[self hashForSign] signWithPrivateKeyData:[_privKey parseHexData]];
     NSData *encoded = [self encodedDataTxWithSignature];
-    NSLog(@"%@", rlp_decode(encoded));
     return [NSString stringWithFormat:@"0x%@", [encoded dataDirectString]];
+}
+-(void)setTransactionChainID:(NSString *)_chainID
+{
+    chainID = _chainID;
+    NSString *chainIDHexStr = [[chainID hexFromDec] removePrefix0x];
+    self.v = [chainIDHexStr hexUp];
 }
 /*1. init Transaction require: nonce(eth_getTransactionCount), gasPrice(input), gasLimit(eth_estimateGas), to(address), value(amount), v(chainID)*/
 -(NSArray *)transactionForSign
