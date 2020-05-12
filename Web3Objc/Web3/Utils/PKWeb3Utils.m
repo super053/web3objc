@@ -40,7 +40,7 @@
     if ([_hex isEqualToString:@""] || [_hex isEqualToString:@"0x"]) {
         return @"0";
     }
-    return [_hex decimalNumberFromHexStr];
+    return [_hex decFromHex];
 }
 -(NSString *)utf8ToHex:(NSString *)_String
 {
