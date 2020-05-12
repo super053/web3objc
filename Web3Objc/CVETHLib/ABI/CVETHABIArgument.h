@@ -21,13 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSString *)argumentWithPadding:(NSString *)_arg;
 +(NSString *)argumentWithRearPadding:(NSString *)_arg;
 
-+(NSString *)fromUint:(NSString *)_uintArg M:(NSInteger)_m;
-+(NSString *)fromInt:(NSString *)_intArg M:(NSInteger)_m;
++(NSString *)getLocationArgNum:(int)_num;
+
 +(NSString *)fromAddress:(NSString *)_addressArg;
-+(NSString *)fromUint:(NSString *)_uintArg;
 +(NSString *)fromInt:(NSString *)_intArg;
-+(NSString *)fromBool:(NSString *)_boolArg;
-+(NSString *)fromBytes:(NSString *)_bytesArg M:(NSInteger)_m;
++(NSString *)fromBool:(nullable NSString *)_boolArg;
 +(NSString *)fromBytes:(NSString *)_bytesArg;
 +(NSString *)fromString:(NSString *)_stringArg;
 
@@ -35,10 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  decode from bytes
  */
-+(NSString *)toUint:(NSString *)_resultArg;
 +(NSString *)toInt:(NSString *)_resultArg;
 +(NSString *)toAddress:(NSString *)_resultArg;
-+(NSString *)toBool:(NSString *)_resultArg;
++(BOOL)toBool:(NSString *)_resultArg;
 +(NSString *)toBytes:(NSString *)_resultArg;
 +(NSString *)toString:(NSString *)_resultArg;
 @end
