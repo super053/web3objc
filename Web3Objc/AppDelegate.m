@@ -68,6 +68,20 @@
     NSDictionary *jsonDic = @{@"version":@3,@"id":@"a003acb8-076b-4f68-b4ff-3e5a7d9f33db",@"address":@"2c7536e3605d9c16a7a3d7b1898e529396a65c23",@"crypto":@{@"ciphertext":@"95e6242a314e5eb490c4a5819b43910ea921629e10b2769a660b2d8a31a2b757",@"cipherparams":@{@"iv":@"d53f6ddb5788a84a79744ec0fdaec26e"},@"cipher":@"aes-128-ctr",@"kdf":@"scrypt",@"kdfparams":@{@"dklen":@32,@"salt":@"44e6f5555f776f0fd795d9120780221a3dd656cb3434e2ceddb548d07ee0abf9",@"n":@8192,@"r":@8,@"p":@1},@"mac":@"840319587d58ade158c5a16459fb2d1b5d06fa299314ccbec46c0f0a9ac7006b"}};
     
     NSLog(@"decrypt : %@", [web3.eth.accounts decrypt:jsonDic WithPassword:@"test!"]);
+    
+    /**test
+     web3.eth
+     */
+    NSLog(@"getGasPrice : %@", [web3.eth getGasPrice]);
+    NSLog(@"getBlockNumber : %@", [web3.eth getBlockNumber]);
+    NSLog(@"getBalance : %@", [web3.utils fromWei:[web3.eth getBalance:@"0xa11cb28a6066684db968075101031d3151dc40ed"] WithUnit:@"ether"]);
+    NSLog(@"getTranactionCount : %@", [web3.eth getTranactionCount:@"0xa11cb28a6066684db968075101031d3151dc40ed"]);
+    NSLog(@"sendSignedTransaction : %@", [web3.eth sendSignedTransaction:@"0xf86c3d84861c468082520894a11cb28a6066684db968075101031d3151dc40ed89056bc75e2d631000008029a07670cffdc041a39174b917ae8ca4faadf3339d4ff27bc92df2b01e624cc0370ea032f201f955a9f852c5d288eac0e4bef1e70bb20b98088785854aeea26514d907"]);
+    NSLog(@"signedTransaction : %@", [web3.eth signedTransaction:testTx WithPrivateKey:@"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71"]);
+    NSLog(@"call : %@", [web3.eth call:testTx]);
+    NSLog(@"estimateGasFrom : %@", [web3.eth estimateGasFrom:@"0xa11cb28a6066684db968075101031d3151dc40ed" TX:testTx]);
+    NSLog(@"getChainId : %@", [web3.eth getChainId]);
+    
     return YES;
 }
 
