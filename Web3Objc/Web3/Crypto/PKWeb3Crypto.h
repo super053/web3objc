@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSDictionary *)encrypt:(NSData *)_data PubKey:(NSData *)_pubkey;
 -(NSData *)decrypt:(NSDictionary *)_encData PrivKey:(NSData *)_privkey;
 -(NSData *)sign:(NSData *)_data PrivKey:(NSData *)_privKey;
--(NSData *)verify:(NSData *)_data Sig:(NSData *)_sig;
+-(NSString *)verify:(NSData *)_data Sig:(NSData *)_sig;
 @end
 
 NS_ASSUME_NONNULL_END

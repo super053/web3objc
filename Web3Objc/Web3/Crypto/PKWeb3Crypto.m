@@ -24,7 +24,7 @@
 {
     return [_data signWithPrivateKeyData:_privKey];
 }
--(NSData *)verify:(NSData *)_data Sig:(NSData *)_sig
+-(NSString *)verify:(NSData *)_data Sig:(NSData *)_sig
 {
     NSData *pubKey = [_data getPubKeyDataFromMessageWithSig:_sig];
     
