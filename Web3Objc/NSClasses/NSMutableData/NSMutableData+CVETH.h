@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-CFAllocatorRef SecureAllocator();
+CFAllocatorRef SecureAllocator(void);
 
 @interface NSMutableData (CVETH)
 + (NSMutableData *)secureDataWithCapacity:(NSUInteger)aNumItems;
