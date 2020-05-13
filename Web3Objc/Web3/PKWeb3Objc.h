@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PKWeb3Eth.h"
 #import "PKWeb3Utils.h"
+#import "PKWeb3Crypto.h"
 
 #import "NSDecimalNumber+MOD.h"
 
@@ -27,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, retain) PKWeb3Eth *eth;
 @property (nonatomic, retain) PKWeb3Utils *utils;
+@property (nonatomic, retain) PKWeb3Crypto *crypto;
 
 + (PKWeb3Objc *)sharedInstance;
 -(BOOL)setEndPoint:(NSString *)_endpoint AndChainID:(NSString *)_chainId;

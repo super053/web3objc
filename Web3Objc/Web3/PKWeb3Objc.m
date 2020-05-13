@@ -25,6 +25,7 @@
     if (self) {
         self.eth = [[PKWeb3Eth alloc] init];
         self.utils = [[PKWeb3Utils alloc] init];
+        self.crypto = [[PKWeb3Crypto alloc] init];
     }
     return self;
 }

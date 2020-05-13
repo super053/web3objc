@@ -7,7 +7,20 @@
 //
 
 #import "PKWeb3EthContract.h"
+#import "SBJSON.h"
 
 @implementation PKWeb3EthContract
+-(PKWeb3EthContract *)initWithAddress:(NSString *)_contractAddress Abi:(NSDictionary *)_abi
+{
+    
+}
+-(NSDictionary *)call:(NSString *)_functionStr WithArgument:(NSDictionary *)_argument
+{
+    
+}
 
+-(NSString *)encodeABI:(NSString *)_functionStr WithArgument:(NSDictionary *)_argument
+{
+    
+}
 @end

@@ -41,6 +41,7 @@
 		65891FC62463EDA800E11F7E /* PKWeb3Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 65891FC52463EDA800E11F7E /* PKWeb3Utils.m */; };
 		65891FCB2463F65B00E11F7E /* PKWeb3EthContract.m in Sources */ = {isa = PBXBuildFile; fileRef = 65891FCA2463F65B00E11F7E /* PKWeb3EthContract.m */; };
 		65891FCE2463F66900E11F7E /* PKWeb3EthAccounts.m in Sources */ = {isa = PBXBuildFile; fileRef = 65891FCD2463F66900E11F7E /* PKWeb3EthAccounts.m */; };
+		658ACDB9246B860300769DFA /* PKWeb3Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 658ACDB8246B860300769DFA /* PKWeb3Crypto.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,8 @@
 		65891FCA2463F65B00E11F7E /* PKWeb3EthContract.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKWeb3EthContract.m; sourceTree = "<group>"; };
 		65891FCC2463F66900E11F7E /* PKWeb3EthAccounts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKWeb3EthAccounts.h; sourceTree = "<group>"; };
 		65891FCD2463F66900E11F7E /* PKWeb3EthAccounts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKWeb3EthAccounts.m; sourceTree = "<group>"; };
+		658ACDB7246B860300769DFA /* PKWeb3Crypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKWeb3Crypto.h; sourceTree = "<group>"; };
+		658ACDB8246B860300769DFA /* PKWeb3Crypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKWeb3Crypto.m; sourceTree = "<group>"; };
 		A98BF9BFF7BEBE031F615939 /* Pods-Web3Objc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Web3Objc.release.xcconfig"; path = "Pods/Target Support Files/Pods-Web3Objc/Pods-Web3Objc.release.xcconfig"; sourceTree = "<group>"; };
 		D1CBF372FC1AAAEA8FC877F0 /* Pods-Web3Objc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Web3Objc.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Web3Objc/Pods-Web3Objc.debug.xcconfig"; sourceTree = "<group>"; };
 		FA120132AFF3F96DC23A2F2D /* libPods-Web3Objc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Web3Objc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,6 +247,7 @@
 		6504A4A02463A4FA00CD20BB /* Web3 */ = {
 			isa = PBXGroup;
 			children = (
+				658ACDB6246B82F900769DFA /* Crypto */,
 				6504A4A12463A4FA00CD20BB /* Utils */,
 				6504A4A22463A4FA00CD20BB /* Eth */,
 				65891FBE2463ED3F00E11F7E /* PKWeb3Objc.h */,
@@ -410,6 +414,15 @@
 			path = Accounts;
 			sourceTree = "<group>";
 		};
+		658ACDB6246B82F900769DFA /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				658ACDB7246B860300769DFA /* PKWeb3Crypto.h */,
+				658ACDB8246B860300769DFA /* PKWeb3Crypto.m */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -506,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658ACDB9246B860300769DFA /* PKWeb3Crypto.m in Sources */,
 				6504A4E82463AADC00CD20BB /* NSDecimalNumber+MOD.m in Sources */,
 				6504A37C2462B75400CD20BB /* ViewController.m in Sources */,
 				6504A4982463A4F200CD20BB /* SBJSON.m in Sources */,
