@@ -45,6 +45,11 @@ web3js objective c version(for ios)
 		           	- hexToUtf8(hex)	
 		           	- toWei(number, unit)	
 		           	- fromWei(number, unit)	
+				
+		- *crypto	- encrypt(data, public key)  
+				- decrypt(enc data, private key)
+				- sign(data, private key)
+				- verify(data, signature)
     
 Pods/TrezorCrypto/aes.h 41: uncomment
 
