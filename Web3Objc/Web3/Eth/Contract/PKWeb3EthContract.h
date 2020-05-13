@@ -13,11 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PKWeb3EthContract : NSObject
 {
     NSDictionary *abiDic;
+    NSString *contractAddress;
 }
--(PKWeb3EthContract *)initWithAddress:(NSString *)_contractAddress Abi:(NSDictionary *)_abi;
--(NSDictionary *)call:(NSString *)_functionStr WithArgument:(NSDictionary *)_argument;
+-(id)initWithAddress:(NSString *)_contractAddress AbiJsonStr:(NSString *)_abistr;
+-(id)initWithAddress:(NSString *)_contractAddress Abi:(NSArray *)_abi;
+-(id)call:(NSString *)_functionStr WithArgument:(NSArray *)_arguments;
 
--(NSString *)encodeABI:(NSString *)_functionStr WithArgument:(NSDictionary *)_argument;
+-(NSString *)encodeABI:(NSString *)_functionStr WithArgument:(NSArray *)_arguments;
 @end
 
 NS_ASSUME_NONNULL_END

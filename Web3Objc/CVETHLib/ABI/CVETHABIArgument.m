@@ -65,7 +65,7 @@ encode to bytes
 +(NSString *)fromData:(NSData *)_data
 {
     NSString *argDataLength = [[[NSString stringWithFormat:@"%lu", (unsigned long)_data.length] hexFromDec] removePrefix0x];
-    NSString *retStr = [NSString stringWithFormat:@"%@%@", retStr, [self argumentWithPadding:argDataLength]];
+    NSString *retStr = [self argumentWithPadding:argDataLength];
     if (_data.length > 32) {
         int i=0;
         while ((i + 1) * 32 < _data.length) {
@@ -100,19 +100,27 @@ encode to bytes
 }
 +(NSString *)toBytes:(NSString *)_resultArg
 {
-    NSString *argBytes = [[self toData:_resultArg] dataDirectString];
+    NSData *decoded = [self toData:_resultArg];
+    if (decoded == nil) {
+        return @"0x";
+    }
+    NSString *argBytes = [decoded dataDirectString];
     return [argBytes addPrefix0x];
 }
 +(NSString *)toString:(NSString *)_resultArg
 {
-    NSString *argStr = [[NSString alloc] initWithData:[self toData:_resultArg] encoding:NSUTF8StringEncoding];
+    NSData *decoded = [self toData:_resultArg];
+    if (decoded == nil) {
+        return @"";
+    }
+    NSString *argStr = [[NSString alloc] initWithData:decoded encoding:NSUTF8StringEncoding];
     return argStr;
 }
 +(NSData *)toData:(NSString *)_resultArg
 {
     NSData *resultData = [_resultArg parseHexData];
     if (resultData.length < 64) {
-        return @"";
+        return nil;
     }
     NSData *argLength = [NSData dataWithBytes:&resultData.bytes[0] length:32];
     NSData *argData = [NSData dataWithBytes:&resultData.bytes[32] length:[[[argLength dataDirectString] decFromHex] intValue]];
