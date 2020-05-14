@@ -42,7 +42,7 @@
 -(id)call:(NSString *)_functionStr WithArgument:(NSArray *)_arguments
 {
     NSString *functionSelector = [CVETHABIArgument functionsSelectorHash:_functionStr];
-    NSArray *outputArr = [[abiDic objectForKey:functionSelector] objectForKey:@"inputs"];
+    NSArray *outputArr = [[abiDic objectForKey:functionSelector] objectForKey:@"outputs"];
     if (outputArr == nil || outputArr.count == 0) {
         return nil;
     }
@@ -76,7 +76,7 @@
     for (int i=0;i<outputArr.count;i++) {
         NSDictionary *argType = [outputArr objectAtIndex:i];
         NSString *argTypeStr = [argType valueForKey:@"type"];
-        NSString *argnameStr = [argType valueForKey:@"type"];
+        NSString *argnameStr = [argType valueForKey:@"name"];
         NSString *argData = [result substringWithRange:NSMakeRange(64 * i, 64)];
         
         if ([argTypeStr hasPrefix:@"int"] || [argTypeStr hasPrefix:@"uint"]) {

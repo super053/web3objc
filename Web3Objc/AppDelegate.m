@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "PKWeb3Objc.h"
+
 #import "rlp.h"
+#import "CVETHWallet.h"
 
 @interface AppDelegate ()
 
@@ -27,13 +29,36 @@
     [web3 setEndPoint:@"https://ropsten.infura.io/v3/a9ef185dce6344ef8b18af3606320420" AndChainID:@"3"];
     
     /**test
+     test var
+     */
+    NSString *testString = @"hello world";
+    NSString *testPrivateKey = @"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71";
+    NSString *testAddress1 = @"0xB5DFe4836cFEA73f8e77656F8E7a649EcF29A2A3"; //testPrivateKey -> address
+    NSString *testAddress2 = @"0xa11cb28a6066684db968075101031d3151dc40ed";
+    
+    /**test
+     web3.crypto
+     */
+    NSData *testStringData = [testString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *privKeyData = [[testPrivateKey removePrefix0x] parseHexData];
+    NSData *pubKeyData = [CVETHWallet _publicKeyFromPrivateKey:privKeyData];
+    NSDictionary *encrypted = [web3.crypto encrypt:testStringData PubKey:pubKeyData];
+    NSLog(@"encrypt : %@", encrypted);
+    NSData *decrypted = [web3.crypto decrypt:encrypted PrivKey:privKeyData];
+    NSLog(@"decrypt : %@", [[NSString alloc] initWithData:decrypted encoding:NSUTF8StringEncoding]);
+    
+    NSData *testSig = [web3.crypto sign:testStringData PrivKey:privKeyData];
+    NSLog(@"sign (r + s + v) : %@", [[testSig dataDirectString] addPrefix0x]);
+    NSLog(@"verify : %@", [web3.crypto verify:testStringData Sig:testSig]);
+    
+    /**test
     web3.utils
     */
     NSLog(@"randomHex 32 : %@", [web3.utils randomHex:32]);
     NSLog(@"sha3 : %@", [web3.utils sha3:@"hello world"]);
     NSLog(@"keccak256 : %@", [web3.utils keccak256:@"hello world"]);
-    NSLog(@"toChecksumAddress : %@", [web3.utils toChecksumAddress:[@"0xB5DFe4836cFEA73f8e77656F8E7a649EcF29A2A3" lowercaseString]]);
-    NSLog(@"checkAddressChecksum : %@", [web3.utils checkAddressChecksum:@"0xB5DFe4836cFEA73f8e77656F8E7a649EcF29A2A3"] ? @"true" : @"false");
+    NSLog(@"toChecksumAddress : %@", [web3.utils toChecksumAddress:[testAddress1 lowercaseString]]);
+    NSLog(@"checkAddressChecksum : %@", [web3.utils checkAddressChecksum:testAddress1] ? @"true" : @"false");
     NSLog(@"numberToHex : %@", [web3.utils numberToHex:@"1000"]);
     NSLog(@"hexToNumber : %@", [web3.utils hexToNumber:@"0x123"]);
     NSLog(@"utf8ToHex : %@", [web3.utils utf8ToHex:@"hello world"]);
@@ -44,24 +69,24 @@
     /**test
      web3.eth.accounts*/
     NSLog(@"create : %@", [web3.eth.accounts create]);
-    NSLog(@"privateKeyToAccount : %@", [web3.eth.accounts privateKeyToAccount:@"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71"]);
+    NSLog(@"privateKeyToAccount : %@", [web3.eth.accounts privateKeyToAccount:testPrivateKey]);
     
     CVETHTransaction *testTx = [[CVETHTransaction alloc] init];
     testTx.nonce = [web3.utils numberToHex:@"61"];
     testTx.gasPrice = [web3.utils numberToHex:@"2250000000"];
     testTx.gasLimit = [web3.utils numberToHex:@"21000"];
-    testTx.to = [@"0xa11cb28a6066684db968075101031d3151dc40ed" removePrefix0x];
+    testTx.to = [testAddress2 removePrefix0x];
     testTx.value = [web3.utils numberToHex:[web3.utils toWei:@"100" WithUnit:@"ether"]];
-    NSDictionary *signTx = [web3.eth.accounts signTransaction:testTx WithPrivateKey:@"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71"];
+    NSDictionary *signTx = [web3.eth.accounts signTransaction:testTx WithPrivateKey:testPrivateKey];
     NSLog(@"signTransaction : %@", signTx);
     NSLog(@"signtx-recover : %@", [web3.eth.accounts recoverTransaction:[signTx valueForKey:@"rawTransaction"]]);
     NSLog(@"signtx-rlp decode : %@", rlp_decode([[signTx valueForKey:@"rawTransaction"] parseHexData]));
     
     NSString *testRawTx = @"0xf86c3d84861c468082520894a11cb28a6066684db968075101031d3151dc40ed89056bc75e2d631000008029a07670cffdc041a39174b917ae8ca4faadf3339d4ff27bc92df2b01e624cc0370ea032f201f955a9f852c5d288eac0e4bef1e70bb20b98088785854aeea26514d907";
     NSLog(@"recoverTransaction : %@", [web3.eth.accounts recoverTransaction:testRawTx]);
-    NSLog(@"sign : %@", [web3.eth.accounts sign:@"hello world" WithPrivateKey:@"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71"]);
+    NSLog(@"sign : %@", [web3.eth.accounts sign:@"hello world" WithPrivateKey:testPrivateKey]);
     NSLog(@"recover : %@", [web3.eth.accounts recover:@"hello world" WithSignature:@"0xcc1b5ae5b05e159d401271afe5d786babfe5456b32bf17d74479dfa9094564c457b3935bea2a88f0cfa387b8a2e923a6bafdefd44200f2461093481b71d6bdb81c"]);
-    NSDictionary *encryptDic = [web3.eth.accounts encrypt:@"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71" WithPassword:@"test!"];
+    NSDictionary *encryptDic = [web3.eth.accounts encrypt:testPrivateKey WithPassword:@"test!"];
     NSLog(@"encrypt : %@", encryptDic);
     NSLog(@"encrypt to decrypt : %@", [web3.eth.accounts decrypt:encryptDic WithPassword:@"test!"]);
     
@@ -74,13 +99,21 @@
      */
     NSLog(@"getGasPrice : %@", [web3.eth getGasPrice]);
     NSLog(@"getBlockNumber : %@", [web3.eth getBlockNumber]);
-    NSLog(@"getBalance : %@", [web3.utils fromWei:[web3.eth getBalance:@"0xa11cb28a6066684db968075101031d3151dc40ed"] WithUnit:@"ether"]);
-    NSLog(@"getTranactionCount : %@", [web3.eth getTranactionCount:@"0xa11cb28a6066684db968075101031d3151dc40ed"]);
+    NSLog(@"getBalance : %@", [web3.utils fromWei:[web3.eth getBalance:testAddress2] WithUnit:@"ether"]);
+    NSLog(@"getTranactionCount : %@", [web3.eth getTranactionCount:testAddress2]);
     NSLog(@"sendSignedTransaction : %@", [web3.eth sendSignedTransaction:@"0xf86c3d84861c468082520894a11cb28a6066684db968075101031d3151dc40ed89056bc75e2d631000008029a07670cffdc041a39174b917ae8ca4faadf3339d4ff27bc92df2b01e624cc0370ea032f201f955a9f852c5d288eac0e4bef1e70bb20b98088785854aeea26514d907"]);
-    NSLog(@"signedTransaction : %@", [web3.eth signedTransaction:testTx WithPrivateKey:@"0x97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71"]);
+    NSLog(@"signedTransaction : %@", [web3.eth signedTransaction:testTx WithPrivateKey:testPrivateKey]);
     NSLog(@"call : %@", [web3.eth call:testTx]);
-    NSLog(@"estimateGasFrom : %@", [web3.eth estimateGasFrom:@"0xa11cb28a6066684db968075101031d3151dc40ed" TX:testTx]);
+    NSLog(@"estimateGasFrom : %@", [web3.eth estimateGasFrom:testAddress2 TX:testTx]);
     NSLog(@"getChainId : %@", [web3.eth getChainId]);
+    
+    /**test
+     web3.eth.contract
+     */
+    PKWeb3EthContract *testContract = [web3.eth.contract initWithAddress:@"0x4946C9c48A1cB906142B180aC7e5E003D3CDD14f" AbiJsonStr:@"[{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"address\"}],\"name\": \"holderLockBalance\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"name\",\"outputs\": [{\"name\": \"\",\"type\": \"string\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_spender\",\"type\": \"address\"},{\"name\": \"_value\",\"type\": \"uint256\"}],\"name\": \"approve\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"},{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"roundPresaleHolderList\",\"outputs\": [{\"name\": \"\",\"type\": \"address\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"address\"}],\"name\": \"subOwner\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"presaleHolderList\",\"outputs\": [{\"name\": \"\",\"type\": \"address\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"holderList\",\"outputs\": [{\"name\": \"\",\"type\": \"address\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"totalSupply\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"address\"}],\"name\": \"isHolders\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"totalEthInWei\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"fundsWallet\",\"outputs\": [{\"name\": \"\",\"type\": \"address\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_from\",\"type\": \"address\"},{\"name\": \"_to\",\"type\": \"address\"},{\"name\": \"_value\",\"type\": \"uint256\"}],\"name\": \"transferFrom\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"decimals\",\"outputs\": [{\"name\": \"\",\"type\": \"uint8\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_address\",\"type\": \"address\"}],\"name\": \"lockAddress\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_presales\",\"type\": \"uint256\"}],\"name\": \"presaleHolderRelease\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"totalPresaleHolderCount\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"address\"}],\"name\": \"presaleJoinCount\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"totalHolderCount\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_spender\",\"type\": \"address\"},{\"name\": \"_subtractedValue\",\"type\": \"uint256\"}],\"name\": \"decreaseApproval\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"_owner\",\"type\": \"address\"}],\"name\": \"balanceOf\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_presales\",\"type\": \"uint256\"},{\"name\": \"_to\",\"type\": \"address\"},{\"name\": \"_amount\",\"type\": \"uint256\"},{\"name\": \"_presalesETH\",\"type\": \"uint256\"},{\"name\": \"_presalesBTH\",\"type\": \"uint256\"},{\"name\": \"_presalesCASH\",\"type\": \"uint256\"},{\"name\": \"_reason\",\"type\": \"string\"}],\"name\": \"manualPresales\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [],\"name\": \"lockStart\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"address\"}],\"name\": \"isLockHolders\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_presales\",\"type\": \"uint256\"}],\"name\": \"presaleHolderLock\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"symbol\",\"outputs\": [{\"name\": \"\",\"type\": \"string\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [],\"name\": \"lockStop\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"totalCash\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_to\",\"type\": \"address\"},{\"name\": \"_value\",\"type\": \"uint256\"}],\"name\": \"transfer\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"totalRoundPresaleHolderCount\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_address\",\"type\": \"address\"}],\"name\": \"releaseAddress\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"presalesAmount\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [],\"name\": \"locked\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_address\",\"type\": \"address\"},{\"name\": \"_lockAmount\",\"type\": \"uint256\"}],\"name\": \"setHolderLockBalance\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"address\"},{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"holderPresaleInfo\",\"outputs\": [{\"name\": \"presalesTime\",\"type\": \"uint256\"},{\"name\": \"presalesAmount\",\"type\": \"uint256\"},{\"name\": \"presalesETH\",\"type\": \"uint256\"},{\"name\": \"presalesBTC\",\"type\": \"uint256\"},{\"name\": \"presalesCASH\",\"type\": \"uint256\"},{\"name\": \"reason\",\"type\": \"string\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_spender\",\"type\": \"address\"},{\"name\": \"_addedValue\",\"type\": \"uint256\"}],\"name\": \"increaseApproval\",\"outputs\": [{\"name\": \"\",\"type\": \"bool\"}],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"_owner\",\"type\": \"address\"},{\"name\": \"_spender\",\"type\": \"address\"}],\"name\": \"allowance\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_address\",\"type\": \"address\"}],\"name\": \"addSubOwner\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"constant\": true,\"inputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"totalBtcInWei\",\"outputs\": [{\"name\": \"\",\"type\": \"uint256\"}],\"payable\": false,\"stateMutability\": \"view\",\"type\": \"function\"},{\"constant\": false,\"inputs\": [{\"name\": \"_address\",\"type\": \"address\"}],\"name\": \"removeSubOwner\",\"outputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"function\"},{\"inputs\": [],\"payable\": false,\"stateMutability\": \"nonpayable\",\"type\": \"constructor\"},{\"anonymous\": false,\"inputs\": [{\"indexed\": true,\"name\": \"from\",\"type\": \"address\"},{\"indexed\": true,\"name\": \"to\",\"type\": \"address\"},{\"indexed\": false,\"name\": \"value\",\"type\": \"uint256\"}],\"name\": \"Transfer\",\"type\": \"event\"},{\"anonymous\": false,\"inputs\": [{\"indexed\": true,\"name\": \"owner\",\"type\": \"address\"},{\"indexed\": true,\"name\": \"spender\",\"type\": \"address\"},{\"indexed\": false,\"name\": \"value\",\"type\": \"uint256\"}],\"name\": \"Approval\",\"type\": \"event\"}]"];
+    NSLog(@"encodeABI : %@", [testContract encodeABI:@"holderPresaleInfo(address,uint256)" WithArgument:@[@"0x88dbbd9a4dcf2bf8e08ae451fd4ef25800a0e9bc",@"1"]]);
+    NSLog(@"call : %@", [testContract call:@"holderPresaleInfo(address,uint256)" WithArgument:@[@"0x88dbbd9a4dcf2bf8e08ae451fd4ef25800a0e9bc",@"1"]]);
+    
     
     return YES;
 }
