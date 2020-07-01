@@ -28,6 +28,10 @@
     PKWeb3Objc *web3 = [PKWeb3Objc sharedInstance];
     [web3 setEndPoint:@"https://ropsten.infura.io/v3/a9ef185dce6344ef8b18af3606320420" AndChainID:@"3"];
     
+    NSDictionary *jsonDic1 = @{@"version":@3,@"id":@"3c84d05b-e61b-1e57-c31a-5b799c3b6b70",@"address":@"015150a221f36bcbe4f03a57ddf299eb62f70e96",@"crypto":@{@"ciphertext":@"481b094db20720af3598bc5599ebc11dc7fd42724c8696fc345ac756d33995d3",@"cipherparams":@{@"iv":@"253229c3adb4854373b043fa7a83c65d"},@"cipher":@"aes-128-ctr",@"kdf":@"pbkdf2",@"kdfparams":@{@"dklen":@32,@"salt":@"c7f17e5dea5e945e38a598f8b69626b6c3f01443b8bfffa9d6f27e258dcc9644",@"c":@10240,@"prf":@"hmac-sha256"},@"mac":@"05f47f48dc4a3c951cc6ce2ca0a99f9c7a57ee9492d525c8e21fb5fdf6ea81e7"},@"name":@"",@"meta":@"{}"};
+    
+    NSLog(@"decrypt : %@", [web3.eth.accounts decrypt:jsonDic1 WithPassword:@")CFs=6~8mMzCxuPHkE+<j5rYV5/:E7NE"]);
+    
     /**test
      test var
      */
@@ -51,6 +55,18 @@
     NSLog(@"sign (r + s + v) : %@", [[testSig dataDirectString] addPrefix0x]);
     NSLog(@"verify : %@", [web3.crypto verify:testStringData Sig:testSig]);
     
+    NSLog(@"mac : %@", [[encrypted valueForKey:@"mac"] dataDirectString]);
+    NSLog(@"cipher : %@", [[encrypted valueForKey:@"cipher"] dataDirectString]);
+    NSLog(@"iv : %@", [[encrypted valueForKey:@"iv"] dataDirectString]);
+    NSLog(@"ephemPublicKey : %@", [[encrypted valueForKey:@"ephemPublicKey"] dataDirectString]);
+    NSLog(@"private key : 97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71");
+    
+    NSDictionary *rndTestEnc = @{@"ephemPublicKey": [@"04523c5605e67fda732aff8df4d8b71ff4dab655fb0bd12c0dbdc3bca026a13dda5f6501ff4d6473cd75e434ef8148bbaf163c3e101eb39bc77eef482865c058e5" parseHexData],
+    @"cipher" : [@"19b712e97c22d79bca2e69a8c251e47b" parseHexData],
+    @"iv" : [@"aef8e7e64c6accdb8d068ea97241a2a6" parseHexData],
+                              @"mac" : [@"d0b91b295ff761d943a1387750114fb09ca930f6d2307d309e377ed0aac4eebf" parseHexData] };
+    NSString *rndTestPrivKey = @"8D9363B42BCA8CAE790294D0FD05C3B402DCE367EBA9CBB9373197BB66D4D9EE";
+    NSLog(@"test dec : %@", [[NSString alloc] initWithData:[web3.crypto decrypt:rndTestEnc PrivKey:[rndTestPrivKey parseHexData]] encoding:NSUTF8StringEncoding]);
     /**test
     web3.utils
     */

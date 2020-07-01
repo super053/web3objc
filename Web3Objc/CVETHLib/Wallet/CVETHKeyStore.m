@@ -124,11 +124,9 @@
     NSDictionary *kdfparams = [crypto valueForKey:@"kdfparams"];
     NSData *salt = [[kdfparams valueForKey:@"salt"] parseHexData];
     NSInteger dklen = [[kdfparams valueForKey:@"dklen"] integerValue];
-    int n = [[kdfparams valueForKey:@"n"] intValue];
-    int r = [[kdfparams valueForKey:@"r"] intValue];
-    int p = [[kdfparams valueForKey:@"p"] intValue];
-    //check kdf == 'scrypt', salt length, n, r, p, dklen length
-    if (![kdf isEqualToString:@"scrypt"] || salt.length == 0 || !n || !p || !r || dklen != 32) {
+    
+    //check kdf == 'scrypt', kdf == 'pbkdf2', salt length, n, r, p, dklen length
+    if (!([kdf isEqualToString:@"scrypt"] || [kdf isEqualToString:@"pbkdf2"]) || salt.length == 0 || dklen != 32) {
         return nil;
     }
     
@@ -136,19 +134,35 @@
     NSData *passwordData = [[_password precomposedStringWithCompatibilityMapping] dataUsingEncoding:NSUTF8StringEncoding];
     const uint8_t *passwordBytes = [passwordData bytes];
     
-    char stop = 0; //acync stop flag
+    
     uint8_t *digest = malloc(sizeof(uint8_t) * 64);
-    int status = crypto_scrypt(passwordBytes, (int)passwordData.length, salt.bytes, salt.length, n, r, p, digest, 64, &stop);
-    NSData *derivedKey = [NSData dataWithBytes:digest length:64];
-    //status != 0 error
-    if (status) {
-        if (status == -2) {
-            //cancelled
+    
+    if ([kdf isEqualToString:@"scrypt"]) {
+        int n = [[kdfparams valueForKey:@"n"] intValue];
+        int r = [[kdfparams valueForKey:@"r"] intValue];
+        int p = [[kdfparams valueForKey:@"p"] intValue];
+        
+        char stop = 0; //acync stop flag
+        int status = crypto_scrypt(passwordBytes, (int)passwordData.length, salt.bytes, salt.length, n, r, p, digest, 64, &stop);
+        //status != 0 error
+        if (status) {
+            if (status == -2) {
+                //cancelled
+                return nil;
+            }
+            //invalid scrypt parameter
             return nil;
         }
-        //invalid scrypt parameter
-        return nil;
+    } else if ([kdf isEqualToString:@"pbkdf2"]) {
+        int c = [[kdfparams valueForKey:@"c"] intValue];
+        NSString *prf = [kdfparams valueForKey:@"prf"];
+        if (![prf isEqualToString:@"hmac-sha256"]) {
+            return nil;
+        }
+        pbkdf2_hmac_sha256(passwordBytes, (int)passwordData.length, salt.bytes, (int)salt.length, c, digest, 64);
     }
+    
+    NSData *derivedKey = [NSData dataWithBytes:digest length:64];
     
     /*check mac*/
     NSMutableData *macCheck = [[NSMutableData alloc] initWithData:[derivedKey subdataWithRange:NSMakeRange(16, 16)]];
