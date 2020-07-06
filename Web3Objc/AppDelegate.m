@@ -12,6 +12,8 @@
 #import "rlp.h"
 #import "CVETHWallet.h"
 
+#import "CVBTCWallet.h"
+
 @interface AppDelegate ()
 
 @end
@@ -130,6 +132,12 @@
     NSLog(@"encodeABI : %@", [testContract encodeABI:@"holderPresaleInfo(address,uint256)" WithArgument:@[@"0x88dbbd9a4dcf2bf8e08ae451fd4ef25800a0e9bc",@"1"]]);
     NSLog(@"call : %@", [testContract call:@"holderPresaleInfo(address,uint256)" WithArgument:@[@"0x88dbbd9a4dcf2bf8e08ae451fd4ef25800a0e9bc",@"1"]]);
     
+    /*btc wallet test*/
+    NSLog(@"wif to : %@", [CVBTCWallet wifToPrivateKey:@"5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"]);
+    NSLog(@"pri to : %@", [CVBTCWallet privateToWif:@"0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D"]);
+    NSLog(@"isWIF : %@", [CVBTCWallet isWIF:@"5J3mBbAH58CpQ3Y5RNJpUKPE62SQ5tfcvU2JpbnkeyhfsYB1Jcn"] ? @"true" : @"false");
+    NSLog(@"isWIFCompressed : %@", [CVBTCWallet isWIFCompressed:@"KxFC1jmwwCoACiCAWZ3eXa96mBM6tb3TYzGmf6YwgdGWZgawvrtJ"] ? @"true" : @"false");
+    NSLog(@"getWalletAddress : %@", [CVBTCWallet getWalletAddress:@"0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D"]);
     
     return YES;
 }
