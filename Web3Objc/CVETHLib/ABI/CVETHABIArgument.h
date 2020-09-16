@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSString *)fromBool:(nullable NSString *)_boolArg;
 +(NSString *)fromBytes:(NSString *)_bytesArg;
 +(NSString *)fromString:(NSString *)_stringArg;
-
++(NSString *)fromDataNoLength:(NSData *)_data; //for bytes32
 
 /**
  decode from bytes

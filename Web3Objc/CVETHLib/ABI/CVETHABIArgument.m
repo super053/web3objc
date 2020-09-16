@@ -65,7 +65,28 @@ encode to bytes
 +(NSString *)fromData:(NSData *)_data
 {
     NSString *argDataLength = [[[NSString stringWithFormat:@"%lu", (unsigned long)_data.length] hexFromDec] removePrefix0x];
-    NSString *retStr = [self argumentWithPadding:argDataLength];
+    NSString *retStr = [NSString stringWithFormat:@"%@%@", [self argumentWithPadding:argDataLength], [self fromDataNoLength:_data]];
+    
+//    NSString *retStr = [self argumentWithPadding:argDataLength];
+//    if (_data.length > 32) {
+//        int i=0;
+//        while ((i + 1) * 32 < _data.length) {
+//            NSData *argSubData = [_data subdataWithRange:NSMakeRange(i * 32, 32)];
+//            retStr = [NSString stringWithFormat:@"%@%@", retStr, [argSubData dataDirectString]];
+//            i++;
+//        }
+//        NSData *argSubData = [_data subdataWithRange:NSMakeRange(i * 32, _data.length - (i * 32))];
+//        retStr = [NSString stringWithFormat:@"%@%@", retStr, [self argumentWithRearPadding:[argSubData dataDirectString]]];
+//
+//    } else {
+//        retStr = [NSString stringWithFormat:@"%@%@", retStr, [self argumentWithRearPadding:[_data dataDirectString]]];
+//    }
+    
+    return retStr;
+}
++(NSString *)fromDataNoLength:(NSData *)_data
+{
+    NSString *retStr = @"";
     if (_data.length > 32) {
         int i=0;
         while ((i + 1) * 32 < _data.length) {
@@ -74,10 +95,10 @@ encode to bytes
             i++;
         }
         NSData *argSubData = [_data subdataWithRange:NSMakeRange(i * 32, _data.length - (i * 32))];
-        retStr = [NSString stringWithFormat:@"%@%@", retStr, [self argumentWithRearPadding:[argSubData dataDirectString]]];
+        retStr = [self argumentWithRearPadding:[argSubData dataDirectString]];
         
     } else {
-        retStr = [NSString stringWithFormat:@"%@%@", retStr, [self argumentWithRearPadding:[_data dataDirectString]]];
+        retStr = [self argumentWithRearPadding:[_data dataDirectString]];
     }
     
     

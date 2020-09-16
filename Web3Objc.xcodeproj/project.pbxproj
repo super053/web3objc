@@ -36,6 +36,7 @@
 		6504A5012463AB6F00CD20BB /* CVETHWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6504A4F52463AB6F00CD20BB /* CVETHWallet.m */; };
 		6504A5022463AB6F00CD20BB /* CVETHKeyStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6504A4F82463AB6F00CD20BB /* CVETHKeyStore.m */; };
 		6504A5032463AB6F00CD20BB /* CVWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 6504A4FB2463AB6F00CD20BB /* CVWebAPI.m */; };
+		6542BF3B24B2DC41000520CF /* CVBTCWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6542BF3A24B2DC41000520CF /* CVBTCWallet.m */; };
 		65891FC02463ED3F00E11F7E /* PKWeb3Objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 65891FBF2463ED3F00E11F7E /* PKWeb3Objc.m */; };
 		65891FC32463ED9D00E11F7E /* PKWeb3Eth.m in Sources */ = {isa = PBXBuildFile; fileRef = 65891FC22463ED9D00E11F7E /* PKWeb3Eth.m */; };
 		65891FC62463EDA800E11F7E /* PKWeb3Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 65891FC52463EDA800E11F7E /* PKWeb3Utils.m */; };
@@ -101,6 +102,8 @@
 		6504A4FA2463AB6F00CD20BB /* CVWebAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVWebAPI.h; sourceTree = "<group>"; };
 		6504A4FB2463AB6F00CD20BB /* CVWebAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVWebAPI.m; sourceTree = "<group>"; };
 		6504A4FC2463AB6F00CD20BB /* CVETH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVETH.h; sourceTree = "<group>"; };
+		6542BF3924B2DC41000520CF /* CVBTCWallet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVBTCWallet.h; sourceTree = "<group>"; };
+		6542BF3A24B2DC41000520CF /* CVBTCWallet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CVBTCWallet.m; sourceTree = "<group>"; };
 		65891FBE2463ED3F00E11F7E /* PKWeb3Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKWeb3Objc.h; sourceTree = "<group>"; };
 		65891FBF2463ED3F00E11F7E /* PKWeb3Objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKWeb3Objc.m; sourceTree = "<group>"; };
 		65891FC12463ED9D00E11F7E /* PKWeb3Eth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKWeb3Eth.h; sourceTree = "<group>"; };
@@ -168,6 +171,7 @@
 		6504A3732462B75400CD20BB /* Web3Objc */ = {
 			isa = PBXGroup;
 			children = (
+				6542BF3724B2DC14000520CF /* CVBTCLib */,
 				6504A4A02463A4FA00CD20BB /* Web3 */,
 				6504A4E92463AB6F00CD20BB /* CVETHLib */,
 				6504A4A32463A72D00CD20BB /* NSClasses */,
@@ -396,6 +400,23 @@
 			path = WebApi;
 			sourceTree = "<group>";
 		};
+		6542BF3724B2DC14000520CF /* CVBTCLib */ = {
+			isa = PBXGroup;
+			children = (
+				6542BF3824B2DC2D000520CF /* Wallet */,
+			);
+			path = CVBTCLib;
+			sourceTree = "<group>";
+		};
+		6542BF3824B2DC2D000520CF /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				6542BF3924B2DC41000520CF /* CVBTCWallet.h */,
+				6542BF3A24B2DC41000520CF /* CVBTCWallet.m */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
 		65891FC72463F62100E11F7E /* Contract */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,6 +543,7 @@
 				658ACDB9246B860300769DFA /* PKWeb3Crypto.m in Sources */,
 				6504A4E82463AADC00CD20BB /* NSDecimalNumber+MOD.m in Sources */,
 				6504A37C2462B75400CD20BB /* ViewController.m in Sources */,
+				6542BF3B24B2DC41000520CF /* CVBTCWallet.m in Sources */,
 				6504A4982463A4F200CD20BB /* SBJSON.m in Sources */,
 				6504A5012463AB6F00CD20BB /* CVETHWallet.m in Sources */,
 				6504A4E32463AADC00CD20BB /* NSMutableData+CVETH.m in Sources */,

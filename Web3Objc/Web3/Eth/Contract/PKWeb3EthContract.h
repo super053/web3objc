@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(id)initWithAddress:(NSString *)_contractAddress Abi:(NSArray *)_abi;
 -(id)call:(NSString *)_functionStr WithArgument:(NSArray *)_arguments;
 
+-(id)getDecodeData:(NSString *)result WithOutput:(NSArray *)outputArr;
+
 -(NSString *)encodeABI:(NSString *)_functionStr WithArgument:(NSArray *)_arguments;
 @end
 
