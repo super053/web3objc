@@ -77,17 +77,17 @@
                     [arr addObject:[CVETHABIArgument toAddress:argData]];
                 } else if ([argTypeStr hasPrefix:@"bool"]) {
                     [arr addObject:[NSNumber numberWithBool:[CVETHABIArgument toBool:argData]]];
-                } else if ([argTypeStr hasPrefix:@"bytes32"]) {
-                    [arr addObject:[CVETHABIArgument toBytes:argData]];
-                } else if ([argTypeStr hasPrefix:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
+                } else if ([argTypeStr isEqualToString:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
                     NSInteger location = [[argData decFromHex] integerValue] * 2;
                     NSString *pointerData = [arrResult substringWithRange:NSMakeRange(location, arrResult.length - location)];
                     
-                    if ([argTypeStr hasPrefix:@"bytes"]) {
+                    if ([argTypeStr isEqualToString:@"bytes"]) {
                         [arr addObject:[CVETHABIArgument toBytes:pointerData]];
                     } else if ([argTypeStr hasPrefix:@"string"]) {
                         [arr addObject:[CVETHABIArgument toString:pointerData]];
                     }
+                } else if ([argTypeStr hasPrefix:@"bytes"]) { //bytes32, 24 etc..
+                    [arr addObject:[CVETHABIArgument toBytes:argData]];
                 } else {
                     return nil;
                 }
@@ -101,12 +101,12 @@
                 return [CVETHABIArgument toAddress:result];
             } else if ([argTypeStr hasPrefix:@"bool"]) {
                 return [NSNumber numberWithBool:[CVETHABIArgument toBool:result]];
-            } else if ([argTypeStr hasPrefix:@"bytes32"]) {
-                return [CVETHABIArgument toBytes:result];
-            } else if ([argTypeStr hasPrefix:@"bytes"]) {
+            } else if ([argTypeStr isEqualToString:@"bytes"]) {
                 return [CVETHABIArgument toBytes:[result substringWithRange:NSMakeRange(64, result.length - 64)]];
             } else if ([argTypeStr hasPrefix:@"string"]) {
                 return [CVETHABIArgument toString:[result substringWithRange:NSMakeRange(64, result.length - 64)]];
+            } else if ([argTypeStr hasPrefix:@"bytes"]) { //bytes32, 24 etc..
+                return [CVETHABIArgument toBytes:result];
             } else {
                 return nil;
             }
@@ -137,17 +137,17 @@
                     [arr addObject:[CVETHABIArgument toAddress:argData_in]];
                 } else if ([argTypeStr hasPrefix:@"bool"]) {
                     [arr addObject:[NSNumber numberWithBool:[CVETHABIArgument toBool:argData_in]]];
-                } else if ([argTypeStr hasPrefix:@"bytes32"]) {
-                    [arr addObject:[CVETHABIArgument toBytes:argData_in]];
-                } else if ([argTypeStr hasPrefix:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
+                } else if ([argTypeStr isEqualToString:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
                     NSInteger location_in = [[argData_in decFromHex] integerValue] * 2;
                     NSString *pointerData_in = [arrResult substringWithRange:NSMakeRange(location_in, arrResult.length - location_in)];
                     
-                    if ([argTypeStr hasPrefix:@"bytes"]) {
+                    if ([argTypeStr isEqualToString:@"bytes"]) {
                         [arr addObject:[CVETHABIArgument toBytes:pointerData_in]];
                     } else if ([argTypeStr hasPrefix:@"string"]) {
                         [arr addObject:[CVETHABIArgument toString:pointerData_in]];
                     }
+                } else if ([argTypeStr hasPrefix:@"bytes"]) { //bytes32, 24 etc..
+                    [arr addObject:[CVETHABIArgument toBytes:argData_in]];
                 } else {
                     return nil;
                 }
@@ -161,16 +161,16 @@
                 [retDic setValue:[CVETHABIArgument toAddress:argData] forKey:argnameStr];
             } else if ([argTypeStr hasPrefix:@"bool"]) {
                 [retDic setValue:[NSNumber numberWithBool:[CVETHABIArgument toBool:argData]] forKey:argnameStr];
-            } else if ([argTypeStr hasPrefix:@"bytes32"]) {
-                [retDic setValue:[CVETHABIArgument toBytes:argData] forKey:argnameStr];
-            } else if ([argTypeStr hasPrefix:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
+            } else if ([argTypeStr isEqualToString:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
                 NSInteger location = [[argData decFromHex] integerValue] * 2;
                 NSString *pointerData = [result substringWithRange:NSMakeRange(location, result.length - location)];
-                if ([argTypeStr hasPrefix:@"bytes"]) {
+                if ([argTypeStr isEqualToString:@"bytes"]) {
                     [retDic setValue:[CVETHABIArgument toBytes:pointerData] forKey:argnameStr];
                 } else if ([argTypeStr hasPrefix:@"string"]) {
                     [retDic setValue:[CVETHABIArgument toString:pointerData] forKey:argnameStr];
                 }
+            } else if ([argTypeStr hasPrefix:@"bytes"]) { //bytes32, 24 etc..
+                [retDic setValue:[CVETHABIArgument toBytes:argData] forKey:argnameStr];
             } else {
                 [retDic setValue:argData forKey:argnameStr];
             }
@@ -208,16 +208,16 @@
                     pointerString = [NSString stringWithFormat:@"%@%@", pointerString, [CVETHABIArgument fromAddress:argData]];
                 } else if ([argTypeStr hasPrefix:@"bool"]) {
                     pointerString = [NSString stringWithFormat:@"%@%@", pointerString, [CVETHABIArgument fromBool:argData]];
-                } else if ([argTypeStr hasPrefix:@"bytes32"]) {
-                    pointerString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument fromDataNoLength:[[argData removePrefix0x] parseHexData]]];
-                } else if ([argTypeStr hasPrefix:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
+                } else if ([argTypeStr isEqualToString:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
                     NSString *location_in = [[NSString stringWithFormat:@"%lu", (argDataArr.count * 32) + (pointerString_in.length / 2)] hexFromDec];
                     encodeString_in = [NSString stringWithFormat:@"%@%@", encodeString_in, [CVETHABIArgument argumentWithPadding:location_in]];
-                    if ([argTypeStr hasPrefix:@"bytes"]) {
+                    if ([argTypeStr isEqualToString:@"bytes"]) {
                         pointerString_in = [NSString stringWithFormat:@"%@%@", pointerString_in, [CVETHABIArgument fromBytes:[argData removePrefix0x]]];
                     } else {
                         pointerString_in = [NSString stringWithFormat:@"%@%@", pointerString_in, [CVETHABIArgument fromString:argData]];
                     }
+                } else if ([argTypeStr hasPrefix:@"bytes"]) { //bytes32, 24 etc..
+                    pointerString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument  fromDataNoLength:[[argData removePrefix0x] parseHexData]]];
                 } else {
                     return nil;
                 }
@@ -232,16 +232,16 @@
                 encodeString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument fromAddress:argData]];
             } else if ([argTypeStr hasPrefix:@"bool"]) {
                 encodeString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument fromBool:argData]];
-            } else if ([argTypeStr hasPrefix:@"bytes32"]) {
-                encodeString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument fromDataNoLength:[[argData removePrefix0x] parseHexData]]];
-            } else if ([argTypeStr hasPrefix:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
+            } else if ([argTypeStr isEqualToString:@"bytes"] || [argTypeStr hasPrefix:@"string"]) {
                 NSString *location = [[NSString stringWithFormat:@"%lu", (argArr.count * 32) + (pointerString.length / 2)] hexFromDec];
                 encodeString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument argumentWithPadding:location]];
-                if ([argTypeStr hasPrefix:@"bytes"]) {
+                if ([argTypeStr isEqualToString:@"bytes"]) {
                     pointerString = [NSString stringWithFormat:@"%@%@", pointerString, [CVETHABIArgument fromBytes:[argData removePrefix0x]]];
                 } else {
                     pointerString = [NSString stringWithFormat:@"%@%@", pointerString, [CVETHABIArgument fromString:argData]];
                 }
+            } else if ([argTypeStr hasPrefix:@"bytes"]) { //bytes32, 24 etc..
+                encodeString = [NSString stringWithFormat:@"%@%@", encodeString, [CVETHABIArgument fromDataNoLength:[[argData removePrefix0x] parseHexData]]];
             } else {
                 return nil;
             }
