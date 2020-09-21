@@ -72,7 +72,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C6A33752-7C08-48BA-9182-F89B53FA156E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Web3Objc/AppDelegate.m"
@@ -82,6 +82,70 @@
             endingLineNumber = "46"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0443758D-CB78-481A-BB67-93684863691D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Web3Objc/AppDelegate.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D48429D-4EAB-4C0F-8FC0-BB7B03E6C93E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Web3Objc/Web3/Eth/Contract/PKWeb3EthContract.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-initWithAddress:Abi:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0D48429D-4EAB-4C0F-8FC0-BB7B03E6C93E - 3001f909b74f0459"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[PKWeb3EthContract initWithAddress:Abi:]"
+                  moduleName = "Web3Objc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/coin/Desktop/gitweb3objc/Web3Objc/Web3/Eth/Contract/PKWeb3EthContract.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "655">
+               </Location>
+               <Location
+                  uuid = "0D48429D-4EAB-4C0F-8FC0-BB7B03E6C93E - 3001f909b74f0459"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[PKWeb3EthContract initWithAddress:Abi:]"
+                  moduleName = "Web3Objc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/coin/Desktop/gitweb3objc/Web3Objc/Web3/Eth/Contract/PKWeb3EthContract.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "682">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

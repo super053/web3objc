@@ -118,6 +118,9 @@
         NSDictionary *argType = [outputArr objectAtIndex:i];
         NSString *argTypeStr = [argType valueForKey:@"type"];
         NSString *argnameStr = [argType valueForKey:@"name"];
+        if (argnameStr == nil || [argnameStr isEqualToString:@""]) {
+            argnameStr = [NSString stringWithFormat:@"output_%d", i];
+        }
         NSString *argData = [result substringWithRange:NSMakeRange(64 * i, 64)];
         if ([argTypeStr hasSuffix:@"[]"]) {
             NSInteger location = [[argData decFromHex] integerValue] * 2;
