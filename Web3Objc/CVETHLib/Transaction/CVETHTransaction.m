@@ -23,7 +23,7 @@
         self.to = @"";
         self.value = @"";
         self.data = @"";
-        
+        self.goversnance = @"0";
         chainID = [[NSUserDefaults standardUserDefaults] objectForKey:@"chainid"];
         if (chainID == nil || [chainID isEqualToString:@""]) {
             NSLog(@"chainID : not set chainID. please set chainID Web3.");
@@ -55,7 +55,7 @@
 -(NSArray *)transactionForSign
 {
     //nonce, gasPrice, gasLimit, to, value(amount), data, v(chainID), r, s
-    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.v parseHexData], [self.r parseHexData], [self.s parseHexData]];
+    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.goversnance parseHexData], [self.v parseHexData], [self.r parseHexData], [self.s parseHexData]];
 }
 
 /*2. create hash for sign
@@ -131,7 +131,7 @@
     if (!signature) {
         return nil;
     }
-    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self getSignedV], [self getSignedR], [self getSignedS]];
+    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.goversnance parseHexData], [self getSignedV], [self getSignedR], [self getSignedS]];
 }
 
 /*6. rlp_encode(signed transaction array)

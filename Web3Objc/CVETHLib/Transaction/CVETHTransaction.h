@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain) NSString *to;
 @property (nonatomic, retain) NSString *value;
 @property (nonatomic, retain) NSString *data;
+@property (nonatomic, retain) NSString *goversnance;
 @property (nonatomic, retain) NSString *v;
 @property (nonatomic, retain) NSString *r;
 @property (nonatomic, retain) NSString *s;

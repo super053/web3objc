@@ -24,11 +24,34 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    /*test data
+    *0x4038Aa65Ab984C1816C0e27C54Da14AC21E93643 : ff4a5c68bd14cc1bb762274a18b3777bd049456f73c8dd0a0df0cd80bec1812f
+    *0xa11CB28A6066684DB968075101031d3151dC40ED : 66bf9bc7fe86b73a085d53555ce99add3a013ef0df86b209d4713361a77e6e89
+    *0x041851B85E47943B62d5e40Cd243Ab8d8dbacA4e : 299a1359c383e9cc04bf096957a9311593a508db55de29c226ea7516445cdb20
+    *0x9668e6824f91FB780F78Af10bD8e88d5BBc08aE4 : 886a4fdd9f61957542e89a911b88cdde491e4c90e2aa499ee6732032a0f792a6
+    *0xbC6Ad2A1776429997f648CB5bCD5c672c4460Ea5 : 1ef4d4b7af79e7e14ad57b5930fb3583109436b48fd77a924effd8429de4ad4c
+    *0xB5DFe4836cFEA73f8e77656F8E7a649EcF29A2A3 : 97e416370613ca532c97bd84e4cc1d9aeb5d1e8e22cd6b660df3fa5823acfc71
+    *0x2c7536E3605D9C16a7a3D7b1898e529396a65c23 : 4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318
+    */
+    
     /**test
      web3 init
      */
     PKWeb3Objc *web3 = [PKWeb3Objc sharedInstance];
-    [web3 setEndPoint:@"https://ropsten.infura.io/v3/a9ef185dce6344ef8b18af3606320420" AndChainID:@"3"];
+//    [web3 setEndPoint:@"https://ropsten.infura.io/v3/a9ef185dce6344ef8b18af3606320420" AndChainID:@"3"];
+    [web3 setEndPoint:@"http://192.168.0.93" AndChainID:@"2017"];
+    
+    NSLog(@"%@", [web3.eth getGasPrice]);
+    
+    CVETHTransaction *testTx1 = [[CVETHTransaction alloc] init];
+    testTx1.nonce = [web3.utils numberToHex:@"0"];
+    testTx1.gasPrice = [web3.utils numberToHex:@"1000000000"];
+    testTx1.gasLimit = [web3.utils numberToHex:@"21000"];
+    testTx1.to = @"a11CB28A6066684DB968075101031d3151dC40ED";
+    testTx1.value = [web3.utils numberToHex:[web3.utils toWei:@"100" WithUnit:@"ether"]];
+    NSDictionary *signTxDic = [web3.eth.accounts signTransaction:testTx1 WithPrivateKey:@"ff4a5c68bd14cc1bb762274a18b3777bd049456f73c8dd0a0df0cd80bec1812f"];
+    NSString *signTx1 = [signTxDic valueForKey:@"rawTransaction"];
+    NSLog(@"%@", signTx1);
     
     
     PKWeb3EthContract *testContract2 = [web3.eth.contract initWithAddress:@"0x0000000000000000000000000000000000000000" AbiJsonStr:@"[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"bytes[]\"},{\"name\":\"\",\"type\":\"string\"}],\"name\":\"tt\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"];
