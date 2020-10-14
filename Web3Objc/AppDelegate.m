@@ -41,18 +41,23 @@
 //    [web3 setEndPoint:@"https://ropsten.infura.io/v3/a9ef185dce6344ef8b18af3606320420" AndChainID:@"3"];
     [web3 setEndPoint:@"http://192.168.0.93" AndChainID:@"2017"];
     
+//    NSLog(@"%@", [web3.eth.accounts privateKeyToAccount:@"9d8028d76893ab81fa92b5d8656e8539c29693dae6b79b9378a56894665ffca8"]);
     NSLog(@"%@", [web3.eth getGasPrice]);
     
     CVETHTransaction *testTx1 = [[CVETHTransaction alloc] init];
-    testTx1.nonce = [web3.utils numberToHex:@"0"];
-    testTx1.gasPrice = [web3.utils numberToHex:@"1000000000"];
-    testTx1.gasLimit = [web3.utils numberToHex:@"21000"];
-    testTx1.to = @"a11CB28A6066684DB968075101031d3151dC40ED";
-    testTx1.value = [web3.utils numberToHex:[web3.utils toWei:@"100" WithUnit:@"ether"]];
-    NSDictionary *signTxDic = [web3.eth.accounts signTransaction:testTx1 WithPrivateKey:@"ff4a5c68bd14cc1bb762274a18b3777bd049456f73c8dd0a0df0cd80bec1812f"];
+    testTx1.nonce = @"0x0";
+    testTx1.gasPrice = @"0x430e23400";
+    testTx1.gasLimit = @"0x15f90";
+    testTx1.to = @"0x4038Aa65Ab984C1816C0e27C54Da14AC21E93643";
+//    testTx1.value = [web3.utils numberToHex:[web3.utils toWei:@"1" WithUnit:@"ether"]];
+    testTx1.value = @"0xaa";
+//    NSDictionary *signTxDic = [web3.eth.accounts signTransaction:testTx1 WithPrivateKey:@"ff4a5c68bd14cc1bb762274a18b3777bd049456f73c8dd0a0df0cd80bec1812f"];
+    NSDictionary *signTxDic = [web3.eth.accounts signTransaction:testTx1 WithPrivateKey:@"66bf9bc7fe86b73a085d53555ce99add3a013ef0df86b209d4713361a77e6e89"];
     NSString *signTx1 = [signTxDic valueForKey:@"rawTransaction"];
     NSLog(@"%@", signTx1);
-    
+    NSLog(@"signtx-rlp decode : %@", rlp_decode([signTx1 parseHexData]));
+    NSLog(@"keccak256 : %@", [web3.utils keccak256:signTx1]);
+    NSLog(@"kec : %@", [[[signTx1 parseHexData] keccak256] dataDirectString]);
     
     PKWeb3EthContract *testContract2 = [web3.eth.contract initWithAddress:@"0x0000000000000000000000000000000000000000" AbiJsonStr:@"[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"bytes[]\"},{\"name\":\"\",\"type\":\"string\"}],\"name\":\"tt\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]"];
     NSLog(@"encodeABI : %@", [testContract2 encodeABI:@"tt(address,bytes[],string)" WithArgument:@[@"0x1234567890123456789012345678901234567890", @[@"0xddff", @"0xaaaa"],@"hello world"]]);

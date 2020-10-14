@@ -55,7 +55,8 @@
 -(NSArray *)transactionForSign
 {
     //nonce, gasPrice, gasLimit, to, value(amount), data, v(chainID), r, s
-    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.goversnance parseHexData], [self.v parseHexData], [self.r parseHexData], [self.s parseHexData]];
+//    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.goversnance parseHexData], [self.v parseHexData], [self.r parseHexData], [self.s parseHexData]];
+    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.v parseHexData], [self.r parseHexData], [self.s parseHexData]];
 }
 
 /*2. create hash for sign
@@ -132,6 +133,7 @@
         return nil;
     }
     return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self.goversnance parseHexData], [self getSignedV], [self getSignedR], [self getSignedS]];
+//    return @[[self.nonce parseHexData], [self.gasPrice parseHexData], [self.gasLimit parseHexData], [self.to parseHexData], [self.value parseHexData], [self.data parseHexData], [self getSignedV], [self getSignedR], [self getSignedS]];
 }
 
 /*6. rlp_encode(signed transaction array)
