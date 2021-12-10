@@ -95,7 +95,7 @@ encode to bytes
             i++;
         }
         NSData *argSubData = [_data subdataWithRange:NSMakeRange(i * 32, _data.length - (i * 32))];
-        retStr = [self argumentWithRearPadding:[argSubData dataDirectString]];
+        retStr = [NSString stringWithFormat:@"%@%@", retStr, [self argumentWithRearPadding:[argSubData dataDirectString]]];
         
     } else {
         retStr = [self argumentWithRearPadding:[_data dataDirectString]];
