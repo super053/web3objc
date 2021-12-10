@@ -56,9 +56,3 @@ Pods/TrezorCrypto/aes.h 41: uncomment
 coinvest ios & blockchain developer P.K. (Park Sung Sik)  
 super053@gmail.com  
 coinios1@coinvest.kr  
-
-
-
-donation(ethereum) : 0xbef705eE6a72Cd35C2ED6b657dD4aC2c0AAB82b6
-
-[![HitCount](http://hits.dwyl.com/super053/web3objc.svg)](http://hits.dwyl.com/super053/web3objc)
